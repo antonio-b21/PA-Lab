@@ -166,52 +166,103 @@
 # spiralMatrix = [matrix[x][y] for (x, y) in path]
 # print(spiralMatrix)
 
-# problema 14
-f = open("graf_in.txt")
-graphType = 1 if f.readline().lower()[:-1] == "orientat" else 0
-nodesNum = int(f.readline())
-edgesNum = int(f.readline())
-edges = [tuple(int(x) for x in f.readline()[:-1].split()) for i in range (edgesNum)]
-startNode, finishNode = [int(n) for n in f.readline()[:-1].split()]
-f.close()
-"""a)"""
-if graphType == 1:
-    print(f"Lista arcelor grafului orientat: {edges}")
-else:
-    print(f"Lista muchiilor grafului neorientat: {edges}")
-"""b)"""
-adjacencyLists = {node:[] for node in range(1, nodesNum + 1)}
-for (node1, node2) in edges:
-    adjacencyLists[node1].append(node2)
-    if graphType == 0:
-        adjacencyLists[node2].append(node1)
-##print("Listele de adiacenta ale grafului sunt:", *[f"\n{int(entry[0])}-{entry[1]}" for entry in adjacencyLists.items()])
-##print("Listele de adiacenta ale grafului sunt:", *[entry for entry in adjacencyLists.items()])
-print("Listele de adiacenta ale grafului sunt:\n" + "\n".join([": ".join([str(entry[0]), ', '.join([str(x) for x in entry[1]])]) for entry in adjacencyLists.items()]))
-"""c)"""
-adjacencyMatrix = [[0 for j in range(nodesNum)] for i in range(nodesNum)]
-for (node1, node2) in edges:
-    adjacencyMatrix[node1 - 1][node2 - 1] = 1
-    if graphType == 0:
-        adjacencyMatrix[node2 - 1][node1 - 1] = 1
-print("Matricea de adiacenta a grafului este:")
-print("\t"+"\t".join([str(i + 1) for i in range(nodesNum)]))
-for i in range(nodesNum):
-    print(i + 1, end="\t")
-    for col in adjacencyMatrix[i]:
-        print(col, end="\t")
-    print()
-"""d)"""
-BF = []
-BF.append((startNode, -1))
-left = right = 0
-while left <= right:
-    fatherNode = BF[left][0]
-    for node in adjacencyLists[fatherNode]:
-        if node not in [node for (node, fatherNode1) in BF]:
-            BF.append((node, fatherNode))
-            right += 1
-    left += 1
-print(f"Parcurgerea in latime se face in felul urmator:{', '.join([str(node) for (node, fatherNode) in BF])}")
-"""e)"""
-DF = []
+# # problema 14
+# f = open("graf_in.txt")
+# graphType = 1 if f.readline().lower()[:-1] == "orientat" else 0
+# nodesNum = int(f.readline())
+# edgesNum = int(f.readline())
+# edges = [tuple(int(x) for x in f.readline()[:-1].split()) for i in range (edgesNum)]
+# startNode, finishNode = [int(n) for n in f.readline()[:-1].split()]
+# f.close()
+# """a)"""
+# if graphType == 1:
+#     print(f"Lista arcelor grafului orientat: {edges}")
+# else:
+#     print(f"Lista muchiilor grafului neorientat: {edges}")
+# """b)"""
+# adjacencyLists = {node:[] for node in range(1, nodesNum + 1)}
+# for (node1, node2) in edges:
+#     adjacencyLists[node1].append(node2)
+#     if graphType == 0:
+#         adjacencyLists[node2].append(node1)
+# ##print("Listele de adiacenta ale grafului sunt:", *[f"\n{int(entry[0])}-{entry[1]}" for entry in adjacencyLists.items()])
+# ##print("Listele de adiacenta ale grafului sunt:", *[entry for entry in adjacencyLists.items()])
+# print("Listele de adiacenta ale grafului sunt:\n" + "\n".join([": ".join([str(entry[0]), ', '.join([str(x) for x in entry[1]])]) for entry in adjacencyLists.items()]))
+# """c)"""
+# adjacencyMatrix = [[0 for j in range(nodesNum)] for i in range(nodesNum)]
+# for (node1, node2) in edges:
+#     adjacencyMatrix[node1 - 1][node2 - 1] = 1
+#     if graphType == 0:
+#         adjacencyMatrix[node2 - 1][node1 - 1] = 1
+# print("Matricea de adiacenta a grafului este:")
+# print("\t"+"\t".join([str(i + 1) for i in range(nodesNum)]))
+# for i in range(nodesNum):
+#     print(i + 1, end="\t")
+#     for col in adjacencyMatrix[i]:
+#         print(col, end="\t")
+#     print()
+# """d)"""
+# BF = []
+# BF.append((startNode, -1))
+# left = right = 0
+# while left <= right:
+#     fatherNode = BF[left][0]
+#     for node in adjacencyLists[fatherNode]:
+#         if node not in [node for (node, fatherNode1) in BF]:
+#             BF.append((node, fatherNode))
+#             right += 1
+#     left += 1
+# print(f"Parcurgerea in latime se face in felul urmator:{', '.join([str(node) for (node, fatherNode) in BF])}")
+# """e)"""
+# DF = []
+# checked = []
+# DF.append(startNode)
+# checked.append(startNode)
+# while DF:
+#     fatherNode = DF[-1]
+#     for node in adjacencyLists[fatherNode]:
+#         if node not in checked:
+#             DF.append(node)
+#             checked.append(node)
+#             break
+#     else:
+#         DF.pop(-1)
+# print(f"Parcurgerea in adancime se face in felul urmator:{', '.join([str(node) for node in checked])}")
+# """f)"""
+# path = []
+# path.append(finishNode)
+# while path[-1] != startNode:
+#     for (node, fatherNode) in BF:
+#         if node == path[-1]:
+#             break
+#     path.append(fatherNode)
+# path.reverse()
+# print(path)
+
+# # problema 15
+# f = open("persoane.in")
+# people = f.readlines()
+# f.close()
+# dictList = []
+# for person in people:
+#     person1 = [x.split(":", 1) for x in person[:-1].split(",", 2)]
+#     dict = {}
+#     for (key, value) in person1:
+#         if key != "adresa":
+#             dict[key] = value
+#         else:
+#             dict2 = {}
+#             adress = [x.split(":") for x in value[1:-1].split(",")]
+#             for (key2, value2) in adress:
+#                 dict2[key2] = value2
+#             dict[key] = dict2
+#     dictList.append(dict)
+# print(dictList)
+# cityDict = {}
+# for person in dictList:
+#     oras = person["adresa"]["oras"]
+#     if oras not in cityDict:
+#         cityDict[oras] = [(person["prenume"], person["nume"])]
+#     else:
+#         cityDict[oras].append((person["prenume"], person["nume"]))
+# print(cityDict)

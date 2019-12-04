@@ -47,21 +47,37 @@
 # except ZeroDivisionError as e4:
 #     print(e4.__doc__)
 
-# problema 4
-def prime_number_generator():
-    primes = []
-    n = 2
-    while True:
-        for x in primes:
-            if n % x == 0:
-                break
-        else:
-            primes.append(n)
-            yield n
-        n += 1
-i = 0
-for prime in prime_number_generator():
-    i += 1
-    print(prime)
-    if i > 20:
-        break
+# # problema 4
+# def prime_number_generator():
+#     n: int = 2
+#     while True:
+#         for i in range(2, n):
+#             if n % i == 0:
+#                 break
+#         else:
+#             yield n
+#         n += 1
+# i = 0
+# for prime in prime_number_generator():
+#     i += 1
+#     print(prime)
+#     if i == 10:
+#         break
+
+# # problema 5
+# def negative_pozitive(numbers):
+#     negative = []
+#     pozitive = []
+#     for x in numbers:
+#         if x < 0:
+#             negative.append(x)
+#         elif x > 0:
+#             pozitive.append(x)
+#     return negative, pozitive
+# list1 = [70, 39, -14, 13, -68, -29, -78, 99, -41, 57]
+# print(negative_pozitive(list1))
+
+# # problema 6
+# from module import *
+# afisare(semn(citire()[1]))
+
