@@ -53,6 +53,132 @@
 #
 # print(binarySearch(lista, 0, len(lista), x+1) - binarySearch(lista, 0, len(lista), x-1))
 
+# # problema 4
+# def findPeak(list, left, right):
+#     if left + 1 == right:
+#         print(left)
+#     else:
+#         mid = (left + right) // 2
+#         print(list[left: right])
+#         if list[mid - 1] < list[mid] > list[mid + 1]:
+#             print(mid)
+#         elif list[mid - 1] < list[mid] < list[mid + 1]:
+#             findPeak(list, mid, right)
+#         elif list[mid - 1] > list[mid] > list[mid + 1]:
+#             findPeak(list, left, mid)
+# with open("date.in") as file:
+#     n = int(file.readline())
+#     list = [int(x) for x in file.readline().split()]
+#
+# findPeak(list, 0, n)
+
+# # problema 5
+# def zFill(n, x=0, y=0):
+#     if n == 0:
+#         global k
+#         mat[x][y] = k
+#         k += 1
+#     else:
+#         n -= 1
+#         zFill(n, x + 0, y + 0)
+#         zFill(n, x + 0, y + 2 ** n)
+#         zFill(n, x + 2 ** n, y + 0)
+#         zFill(n, x + 2 ** n, y + 2 ** n)
+# n = 2
+# k = 1
+# mat = [[0] * 2 ** n for i in range(2 ** n)]
+# zFill(n)
+# for line in mat:
+#     print(line)
+
+# n = 3
+# x, y = 2, 0
+# i = 0
+# n -= 1
+# while n+1:
+#     if x >= 2**n and y >= 2**n:
+#         i += 2**(n*2)*3
+#         x -= 2**n
+#         y -= 2**n
+#     elif x >= 2**n:
+#         i += 2**(n*2)
+#         x -= 2**n
+#     elif y >= 2**n:
+#         pass
+#     else:
+#         i += 2**(n*2)*2
+#         y -= 2**n
+#     n -=1
+# print(i+1)
+
+# # problema 6
+# def fill(n, i, j, x, y):
+#     global k
+#     if n == 1:
+#         if i != x or j != y:
+#             mat[i][j] = k
+#         if i+1 != x or j != y:
+#             mat[i+1][j] = k
+#         if i != x or j+1 != y:
+#             mat[i][j+1] = k
+#         if i+1 != x or j+1 != y:
+#             mat[i+1][j+1] = k
+#         k += 1
+#     else:
+#         if x < i + 2**(n-1) and y < j + 2**(n-1):
+#             mat[i+2**(n-1)-1][j+2**(n-1)] = k
+#             mat[i+2**(n-1)][j+2**(n-1)-1] = k
+#             mat[i+2**(n-1)][j+2**(n-1)] = k
+#             k += 1
+#             fill(n-1, i, j, x, y)
+#             fill(n-1, i, j+2**(n-1), i+2**(n-1)-1, j+2**(n-1))
+#             fill(n-1, i+2**(n-1), j, i+2**(n-1), j+2**(n-1)-1)
+#             fill(n-1, i+2**(n-1), j+2**(n-1), i+2**(n-1), j+2**(n-1))
+#         elif x < i + 2**(n-1):
+#             mat[i+2**(n-1)-1][j+2**(n-1)-1] = k
+#             mat[i+2**(n-1)][j+2**(n-1)-1] = k
+#             mat[i+2**(n-1)][j+2**(n-1)] = k
+#             k += 1
+#             fill(n-1, i, j, i+2**(n-1)-1, j+2**(n-1)-1)
+#             fill(n-1, i, j+2**(n-1), x, y)
+#             fill(n-1, i+2**(n-1), j, i+2**(n-1), j+2**(n-1)-1)
+#             fill(n-1, i+2**(n-1), j+2**(n-1), i+2**(n-1), j+2**(n-1))
+#         elif y < j + 2**(n-1):
+#             mat[i+2**(n-1)-1][y+2**(n-1)-1] = k
+#             mat[i+2**(n-1)-1][j+2**(n-1)] = k
+#             mat[i+2**(n-1)][j+2**(n-1)] = k
+#             k += 1
+#             fill(n-1, i, j, i+2**(n-1)-1, y+2**(n-1)-1)
+#             fill(n-1, i, j+2**(n-1), i+2**(n-1)-1, j+2**(n-1))
+#             fill(n-1, i+2**(n-1), j, x, y)
+#             fill(n-1, i+2**(n-1), j+2**(n-1), i+2**(n-1), j+2**(n-1))
+#         else:
+#             mat[i+2**(n-1)-1][y+2**(n-1)-1] = k
+#             mat[i+2**(n-1)-1][j+2**(n-1)] = k
+#             mat[i+2**(n-1)][j+2**(n-1)-1] = k
+#             k += 1
+#             fill(n-1, i, j, i+2**(n-1)-1, y+2**(n-1)-1)
+#             fill(n-1, i, j+2**(n-1), i+2**(n-1)-1, j+2**(n-1))
+#             fill(n-1, i+2**(n-1), j, i+2**(n-1), j+2**(n-1)-1)
+#             fill(n-1, i+2**(n-1), j+2**(n-1), x, y)
+#
+# f = open("piesa.in")
+# n = int(f.readline())
+# mat = [[0] * 2**n for x in range(2**n)]
+# x, y = [int(x)-1 for x in f.readline().split()]
+# mat[x][y] = 0
+# k = 1
+# fill(n, 0, 0, x, y)
+# for line in mat:
+#     for elem in line:
+#         print(elem, end="\t")
+#     print()
+
+# problema 7
+
+
+
+
 # # problema 11
 # def decomp(number):
 #     global sum
